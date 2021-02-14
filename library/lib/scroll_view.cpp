@@ -20,6 +20,7 @@
 
 #include <borealis/application.hpp>
 #include <borealis/scroll_view.hpp>
+#include <borealis/sidebar.hpp>
 
 namespace brls
 {
@@ -141,9 +142,19 @@ bool ScrollView::updateScrolling(bool animated)
     if (contentHeight == 0)
         return false;
 
-    View* focusedView                  = Application::getCurrentFocus();
+    
+    View* focusedView;
+    float newScroll;
+    // Don't scroll if the focus is on a sidebar
+    if (focusedView = dynamic_cast<SidebarItem*>(Application::getCurrentFocus()))
+    {
+        this->startScrolling(false, 0.0f);
+        return true;
+    }
+
+    focusedView                        = Application::getCurrentFocus();
     int currentSelectionMiddleOnScreen = focusedView->getY() + focusedView->getHeight() / 2;
-    float newScroll                    = -(this->scrollY * contentHeight) - ((float)currentSelectionMiddleOnScreen - (float)this->middleY);
+    newScroll                    = -(this->scrollY * contentHeight) - ((float)currentSelectionMiddleOnScreen - (float)this->middleY);
 
     // Bottom boundary
     if ((float)this->y + newScroll + contentHeight < (float)this->bottomY)
