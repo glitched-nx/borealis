@@ -144,11 +144,8 @@ bool ScrollView::updateScrolling(bool animated)
 
     // Don't scroll if the focus is on a sidebar
     View* focusedView = Application::getCurrentFocus();
-    if (focusedView->getViewType() == ViewType::SIDEBARITEM)
-    {
-        this->startScrolling(false, 0.0f);
-        return true;
-    }
+    if (focusedView->getViewType() != this->getViewType())
+        return false;
 
     int currentSelectionMiddleOnScreen = focusedView->getY() + focusedView->getHeight() / 2;
     float newScroll                    = -(this->scrollY * contentHeight) - ((float)currentSelectionMiddleOnScreen - (float)this->middleY);
