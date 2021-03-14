@@ -59,6 +59,12 @@ std::string getStr(std::string stringName, Args&&... args)
 void loadTranslations();
 
 /**
+ * Loads all translations of the desired locale + default locale
+ * Must be called before trying to get a translation!
+ */
+void loadTranslations(std::string locale);
+
+/**
  * Returns the current system locale
  * NOT the one that's currently used in the app!
  */
