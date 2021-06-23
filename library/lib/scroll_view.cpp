@@ -164,12 +164,16 @@ bool ScrollView::updateScrolling(bool animated)
     if (contentHeight == 0)
         return false;
 
-    // Don't scroll if the focus is on a sidebar
+    // Ensure we're dealing with a focused view with a parent
     View* focusedView = Application::getCurrentFocus();
-    if (focusedView->getViewType() != this->getViewType())
+    if (!focusedView || !focusedView->hasParent())
         return false;
 
-    int currentSelectionMiddleOnScreen = focusedView->getY() + focusedView->getHeight() / 2;
+    // We're only going to use focusedView's properties if its parent matches our contentView
+    bool useFocusedView = (focusedView->getParent() == this->contentView);
+
+    // Calculate scroll value
+    int currentSelectionMiddleOnScreen = (useFocusedView ? (focusedView->getY() + focusedView->getHeight() / 2) : this->contentView->getY());
     float newScroll                    = -(this->scrollY * contentHeight) - ((float)currentSelectionMiddleOnScreen - (float)this->middleY);
 
     // Bottom boundary
