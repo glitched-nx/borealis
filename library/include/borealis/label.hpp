@@ -97,6 +97,9 @@ class Label : public View
 
     void updateTextDimensions();
 
+    size_t getUtf8StringLength(const std::string& str);
+    std::string getUtf8SubString(const std::string& str, size_t start, size_t len = std::string::npos);
+
   public:
     Label(LabelStyle labelStyle, std::string text, bool multiline = false);
     ~Label();
