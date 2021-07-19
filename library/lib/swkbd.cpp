@@ -31,7 +31,7 @@ namespace brls
 
 #ifdef __SWITCH__
 
-static SwkbdConfig createSwkbdBaseConfig(std::string headerText, std::string subText, int maxStringLength, std::string initialText)
+static SwkbdConfig createSwkbdBaseConfig(std::string headerText, std::string subText, int maxStringLength, std::string initialText, std::string okButton, std::string guideText, bool isPassword)
 {
     SwkbdConfig config;
 
@@ -44,6 +44,12 @@ static SwkbdConfig createSwkbdBaseConfig(std::string headerText, std::string sub
     swkbdConfigSetInitialText(&config, initialText.c_str());
     swkbdConfigSetStringLenMin(&config, 1);
     swkbdConfigSetBlurBackground(&config, true);
+    if(isPassword)
+        swkbdConfigMakePresetPassword(&config);
+    if(okButton.size())
+        swkbdConfigSetOkButtonText(&config, okButton.c_str());
+    if(guideText.size())
+        swkbdConfigSetGuideText(&config, guideText.c_str());
 
     return config;
 }
@@ -99,10 +105,10 @@ static std::string terminalInput(std::string text)
 }
 #endif
 
-bool Swkbd::openForText(std::function<void(std::string)> f, std::string headerText, std::string subText, int maxStringLength, std::string initialText, int kbdDisableBitmask)
+bool Swkbd::openForText(std::function<void(std::string)> f, std::string headerText, std::string subText, int maxStringLength, std::string initialText, int kbdDisableBitmask, std::string okButton, std::string guideText, bool isPassword)
 {
 #ifdef __SWITCH__
-    SwkbdConfig config = createSwkbdBaseConfig(headerText, subText, maxStringLength, initialText);
+    SwkbdConfig config = createSwkbdBaseConfig(headerText, subText, maxStringLength, initialText, okButton, guideText, isPassword);
 
     swkbdConfigSetType(&config, SwkbdType_Normal);
     swkbdConfigSetKeySetDisableBitmask(&config, getSwkbdKeyDisableBitmask(kbdDisableBitmask));
@@ -127,10 +133,10 @@ bool Swkbd::openForText(std::function<void(std::string)> f, std::string headerTe
 #endif
 }
 
-bool Swkbd::openForNumber(std::function<void(int)> f, std::string headerText, std::string subText, int maxStringLength, std::string initialText, std::string leftButton, std::string rightButton, int kbdDisableBitmask)
+bool Swkbd::openForNumber(std::function<void(int)> f, std::string headerText, std::string subText, int maxStringLength, std::string initialText, std::string leftButton, std::string rightButton, int kbdDisableBitmask, std::string okButton, std::string guideText, bool isPassword)
 {
 #ifdef __SWITCH__
-    SwkbdConfig config = createSwkbdBaseConfig(headerText, subText, maxStringLength, initialText);
+    SwkbdConfig config = createSwkbdBaseConfig(headerText, subText, maxStringLength, initialText, okButton, guideText, isPassword);
 
     swkbdConfigSetType(&config, SwkbdType_NumPad);
     swkbdConfigSetLeftOptionalSymbolKey(&config, leftButton.c_str());

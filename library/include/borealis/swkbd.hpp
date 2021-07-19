@@ -41,8 +41,8 @@ enum KeyboardKeyDisableBitmask
 class Swkbd
 {
   public:
-    static bool openForText(std::function<void(std::string)> f, std::string headerText = "", std::string subText = "", int maxStringLength = 32, std::string initialText = "", int kbdDisableBitmask = KeyboardKeyDisableBitmask::KEYBOARD_DISABLE_NONE);
-    static bool openForNumber(std::function<void(int)> f, std::string headerText = "", std::string subText = "", int maxStringLength = 32, std::string initialText = "", std::string leftButton = "", std::string rightButton = "", int kbdDisableBitmask = KeyboardKeyDisableBitmask::KEYBOARD_DISABLE_NONE);
+    static bool openForText(std::function<void(std::string)> f, std::string headerText = "", std::string subText = "", int maxStringLength = 32, std::string initialText = "", int kbdDisableBitmask = KeyboardKeyDisableBitmask::KEYBOARD_DISABLE_NONE, std::string okButton = "", std::string guideText = "", bool isPassword = false);
+    static bool openForNumber(std::function<void(int)> f, std::string headerText = "", std::string subText = "", int maxStringLength = 32, std::string initialText = "", std::string leftButton = "", std::string rightButton = "", int kbdDisableBitmask = KeyboardKeyDisableBitmask::KEYBOARD_DISABLE_NONE, std::string okButton = "", std::string guideText = "", bool isPassword = false);
 };
 
 } // namespace brls
