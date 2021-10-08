@@ -672,6 +672,11 @@ void List::customSpacing(View* current, View* next, int* spacing)
     // Nothing to do by default
 }
 
+View* List::getDefaultFocus()
+{
+    return this->getViewsCount() ? this->brls::ScrollView::getDefaultFocus() : nullptr;
+}
+
 List::~List()
 {
     // ScrollView already deletes the content view
