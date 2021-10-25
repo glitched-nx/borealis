@@ -218,7 +218,6 @@ class List : public ScrollView
     void setSpacing(unsigned spacing);
     unsigned getSpacing();
     virtual void customSpacing(View* current, View* next, int* spacing);
-    View* getDefaultFocus() override;
 };
 
 } // namespace brls
