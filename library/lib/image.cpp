@@ -77,7 +77,10 @@ unsigned char* Image::copyImgBuf() const
 
 Image& Image::operator=(const Image& cp_assign)
 {
-    return *this = cp_assign;
+    if (this != &cp_assign) {
+        // Implementierung hier
+    }
+    return *this;
 }
 
 Image& Image::operator=(Image&& mv_assign)
